@@ -19,7 +19,7 @@ use windows_sys::Win32::{
     },
 };
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, strum::Display)]
 pub enum SpecialFolder {
     AdminTools = CSIDL_ADMINTOOLS as isize,
     ApplicationData = CSIDL_APPDATA as isize,
