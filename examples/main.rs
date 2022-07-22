@@ -1,7 +1,7 @@
-use special_folder::{get_special_folder, SpecialFolder};
+use special_folder::SpecialFolder;
 
 fn print_special_folder(folder: SpecialFolder) {
-    let path = get_special_folder(folder);
+    let path = folder.get();
     println!("{} = {:?}", &folder, path);
 }
 

@@ -135,16 +135,18 @@ pub enum SpecialFolder {
     Windows = CSIDL_WINDOWS as isize,
 }
 
-/// Get the path for a special folder.
-pub fn get_special_folder(special_folder: SpecialFolder) -> Option<PathBuf> {
-    let mut path = [0; MAX_PATH as usize];
-    let result = unsafe { SHGetFolderPathW(0, special_folder as _, 0, 0, &mut path[0]) };
+impl SpecialFolder {
+    /// Get the path for a special folder.
+    pub fn get(&self) -> Option<PathBuf> {
+        let mut path = [0; MAX_PATH as usize];
+        let result = unsafe { SHGetFolderPathW(0, *self as _, 0, 0, &mut path[0]) };
 
-    if result == 0 {
-        let p: Vec<u16> = path.into_iter().take_while(|&x| x != 0).collect();
-        let s = OsString::from_wide(&p);
-        Some(s.into())
-    } else {
-        None
+        if result == 0 {
+            let p: Vec<u16> = path.into_iter().take_while(|&x| x != 0).collect();
+            let s = OsString::from_wide(&p);
+            Some(s.into())
+        } else {
+            None
+        }
     }
 }
